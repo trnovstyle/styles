@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" and="text" delimiter-precedes-et-al="always" delimiter-precedes-last="always" et-al-min="7" et-al-use-first="6" name-as-sort-order="all" demote-non-dropping-particle="never" default-locale="sl-SI">
-  <!-- This style was edited with the Visual CSL Editor (https://editor.citationstyles.org/visualEditor/) -->
   <info>
-    <title>Urbani izziv (Urban Challenge) (Slovenščina)</title>
-    <id>http://www.zotero.org/styles/urbani-izziv</id>
-    <link href="http://www.zotero.org/styles/urbani-izziv" rel="self"/>
+    <title>Urbani izziv (Urban Challenge) (Slovenščina) - popravljeno 2026</title>
+    <id>http://www.zotero.org/styles/urbani-izziv-urban-challenge</id>
+    <link href="http://www.zotero.org/styles/urbani-izziv-urban-challenge" rel="self"/>
     <link href="http://www.zotero.org/styles/ecology-letters" rel="template"/>
-    <link href="https://urbaniizziv.uirs.si/Navodila-za-avtorje" rel="documentation"/>
+    <link href="https://www.urbaniizziv.si/Portals/urbaniizziv/obrazci/Navodila%20za%20avtorje_Formatiranje%20%C4%8Dlankov_Urbani%20izziv.pdf" rel="documentation"/>
     <author>
       <name>Simon Koblar</name>
       <email>simon.koblar@uirs.si</email>
@@ -17,7 +16,7 @@
     <issn>0353-6483</issn>
     <eissn>1855-8399</eissn>
     <summary>citiranje za revijo Urbani izziv, ki jo izdaja Urbanistični inštitut RS.</summary>
-    <updated>2020-07-15T13:59:28+00:00</updated>
+    <updated>2026-01-14T09:20:55+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <locale xml:lang="sl">
@@ -43,7 +42,7 @@
           <label form="short" text-case="lowercase" prefix=" (" suffix=")"/>
         </names>
         <group delimiter=", ">
-          <text variable="container-title" text-case="title" font-style="italic"/>
+          <text variable="container-title" text-case="capitalize-first" font-style="italic"/>
           <text variable="collection-title" text-case="title"/>
         </group>
       </if>
@@ -54,10 +53,7 @@
         </group>
       </else-if>
       <else-if type="webpage" match="any">
-        <group delimiter=", ">
-          <text variable="container-title"/>
-          <text variable="collection-title"/>
-        </group>
+        <text variable="publisher" prefix=". "/>
       </else-if>
       <else-if type="article-magazine" match="any"/>
       <else-if type="article" match="any">
@@ -84,7 +80,7 @@
   </macro>
   <macro name="author">
     <names variable="author">
-      <name delimiter-precedes-last="always" initialize-with="." name-as-sort-order="all"/>
+      <name delimiter-precedes-last="always" initialize-with=". " name-as-sort-order="all"/>
       <label form="short" text-case="lowercase" prefix=" (" suffix=")"/>
       <substitute>
         <names variable="editor"/>
@@ -100,14 +96,31 @@
         <names variable="editor"/>
         <names variable="translator"/>
         <choose>
-          <if type="bill book graphic legal_case legislation motion_picture report song" match="any">
+          <if type="bill book graphic legal_case motion_picture report song" match="any">
             <text variable="title" form="short" font-style="italic"/>
           </if>
           <else-if type="webpage" match="any">
-            <text variable="container-title"/>
+            <choose>
+              <if match="any" variable="publisher">
+                <text variable="publisher"/>
+              </if>
+              <else-if match="any" variable="title-short">
+                <text variable="title-short" suffix=" ..."/>
+              </else-if>
+              <else>
+                <text variable="title"/>
+              </else>
+            </choose>
+            <text variable="title-short" suffix=" ..."/>
           </else-if>
           <else-if type="dataset" match="any">
             <text variable="publisher"/>
+          </else-if>
+          <else-if type="legislation" match="any">
+            <group delimiter=", ">
+              <text variable="title-short"/>
+              <text variable="volume"/>
+            </group>
           </else-if>
           <else>
             <text variable="original-publisher" form="short" quotes="false"/>
@@ -151,10 +164,10 @@
         <text macro="edition" prefix=", "/>
       </else-if>
       <else-if type="webpage">
-        <text variable="container-title"/>
+        <text variable="title" font-style="italic"/>
       </else-if>
       <else-if type="legislation" match="any">
-        <text variable="title"/>
+        <text variable="title" font-style="italic"/>
       </else-if>
       <else-if type="article" match="any">
         <text variable="publisher"/>
@@ -188,6 +201,7 @@
           <date-part name="year"/>
         </date>
       </if>
+      <else-if type="legislation" match="any"/>
       <else>
         <text term="no date" form="short"/>
       </else>
@@ -215,7 +229,6 @@
             <text variable="issue" prefix="(" suffix=")"/>
           </group>
           <group>
-            <text value="str. "/>
             <text variable="page"/>
           </group>
         </group>
@@ -229,7 +242,6 @@
       <else-if type="chapter paper-conference entry-encyclopedia" match="any">
         <group delimiter=". " prefix=", ">
           <group>
-            <label text-case="lowercase" suffix=" " variable="page" form="short"/>
             <text variable="page"/>
           </group>
           <text macro="event"/>
@@ -277,6 +289,15 @@
                 <text macro="issued"/>
               </group>
             </if>
+            <else-if type="legislation" match="any">
+              <group delimiter=". " prefix=". ">
+                <group delimiter=", " suffix=".">
+                  <text variable="container-title"/>
+                  <text variable="volume"/>
+                </group>
+                <text variable="publisher-place"/>
+              </group>
+            </else-if>
             <else>
               <text variable="container-title" prefix=". "/>
               <text variable="publisher-place"/>
